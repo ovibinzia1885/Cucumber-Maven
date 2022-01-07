@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.login;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,19 +29,11 @@ public class StepDefinitions {
 
 
     }
-    @When("User enters valid credentials")
-    public void user_enters_valid_credentials() throws InterruptedException {
-        //wait.until(ExpectedConditions.presenceOfElementLocated (By.className("login")));// wait until getting the login button
-        WebElement btnLogin=driver.findElement(By.className("login"));
-        btnLogin.click();
-        Thread.sleep(1000);
-        WebElement txtEmail=driver.findElement(By.id("email"));
-        txtEmail.sendKeys("testuser412@grr.la");
-        WebElement txtPassword=driver.findElement(By.id("passwd"));
-        txtPassword.sendKeys("2t8zmqzL");
-        Thread.sleep(1000);
-        WebElement btnSubmitLogin=driver.findElement(By.id("SubmitLogin"));
-        btnSubmitLogin.click();
+    @When("^User enters valid \"([^\"]*)\" and valid \"([^\"]*)\"$")
+    public void user_enters_valid_credentials(String email,String password) throws InterruptedException {
+        wait=new WebDriverWait(driver,40);
+        login login=new login(driver);
+        login.doLogin(email,password);
 
     }
     @Then("User can logged in successfully")
